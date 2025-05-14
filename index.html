@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOVASKIN - Your Daily Wellness Companion</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+    body { 
+      background: linear-gradient(
+        45deg,
+        #69D84F,
+        #FDD017,
+        #b39ddb,
+        #69D84F
+      );
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      font-family: 'Inter', Arial, sans-serif; 
+      margin: 0; 
+    }
+
+    @keyframes gradientBG {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    .header { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 16px 48px; 
+      background: #111;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+    .logo { 
+      font-weight: bold; 
+      font-size: 1.2rem; 
+      display: flex; 
+      align-items: center; 
+      gap: 8px;
+      color: #fff;
+    }
+    .logo img {
+      height: 24px;
+      width: auto;
+    }
+    .logo-star { 
+      font-size: 1.2rem;
+      color: #fff;
+    }
+    .nav { 
+      display: flex; 
+      gap: 32px; 
+      font-size: 1rem;
+    }
+    .nav-link {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+    .nav-link:hover {
+      opacity: 0.8;
+    }
+    .main { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 60px 80px 12px; 
+      min-height: 80vh;
+      margin-top: 48px;
+    }
+    .main-left { max-width: 680px; }
+    .main-logo {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .main-logo img {
+      height: 120px;
+      width: auto;
+    }
+    .main-logo-text {
+      font-weight: bold;
+      font-size: 3.5rem;
+      color: #111;
+    }
+    .main-title { 
+      font-size: 2.5rem; 
+      font-weight: 700; 
+      margin: 0 0 24px 0; 
+      line-height: 1.1; 
+    }
+    .main-title .highlight { color: #FDD017; }
+    .main-desc { 
+      color: #444; 
+      font-size: 1rem; 
+      margin-bottom: 32px; 
+      line-height: 1.3; 
+    }
+    .main-buttons { display: flex; gap: 20px; }
+    .btn { padding: 12px 28px; border-radius: 28px; font-size: 1.1rem; font-weight: 600; border: none; cursor: pointer; transition: background 0.2s; }
+    .btn-primary, .btn-secondary {
+      background: #FDD017;
+      color: #111;
+      border: none;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover, .btn-secondary:hover {
+      background: #ffe066;
+    }
+    .main-right { position: relative; width: 600px; height: 600px; }
+    .hollow-star {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 30rem;
+      color: transparent;
+      -webkit-text-stroke: 2px white;
+      opacity: 0.8;
+      transition: transform 0.1s ease-out;
+    }
+    @media (max-width: 900px) {
+      .main { flex-direction: column; padding: 24px; }
+      .main-right { 
+        margin-top: 40px;
+        width: 100%;
+        height: 400px;
+      }
+      .hollow-star {
+        position: relative;
+        top: 0;
+        transform: none;
+        font-size: 20rem;
+        margin: 40px auto;
+        display: block;
+      }
+    }
+    .three-box-section { width: 100%; display: flex; justify-content: center; align-items: center; padding: 64px 0 80px 0; background: transparent; }
+    .three-box-container { display: flex; gap: 48px; }
+    .color-box { 
+      width: 300px; 
+      height: 300px; 
+      border-radius: 24px; 
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .box-red { background: #E74C3C; }
+    .box-red:hover { background: #c0392b; }
+    .box-yellow { background: #FDD017; }
+    .box-yellow:hover { background: #f4c800; }
+    .box-purple { background: #b39ddb; }
+    .box-purple:hover { background: #a28bc9; }
+    .box-green { background: #4dd0b0; }
+    .box-green:hover { background: #45bca0; }
+    .box-content { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; }
+    .box-emoji { font-size: 5rem; margin-bottom: 24px; }
+    .box-title { color: #fff; font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; letter-spacing: 0.01em; }
+    .box-subtext { color: #fff; font-size: 0.95rem; font-weight: 400; opacity: 0.92; }
+    @media (max-width: 900px) {
+      .three-box-container { flex-direction: column; gap: 32px; align-items: center; }
+      .color-box { width: 200px; height: 200px; }
+    }
+    .patch-intro-section {
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      padding: 80px 0 80px 0;
+      background: transparent;
+      gap: 64px;
+    }
+    .patch-intro-left {
+      max-width: 600px;
+      flex: 1;
+      margin-left: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .patch-intro-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 32px;
+      line-height: 1.1;
+      color: #111;
+      text-align: left;
+    }
+    .patch-intro-desc {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #222;
+      margin-bottom: 40px;
+      text-align: left;
+    }
+    .learn-more-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #FDD017;
+      color: #111;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      border-radius: 24px;
+      padding: 14px 28px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: background 0.2s, box-shadow 0.2s;
+      margin-top: 8px;
+    }
+    .learn-more-btn:hover {
+      background: #ffe066;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    }
+    .learn-more-btn .star {
+      font-size: 1.2em;
+      color: #111;
+    }
+    .patch-intro-image-bg {
+      display: none;
+    }
+    .patch-intro-image-outer {
+      border: 8px solid #FDD017; /* Yellow */
+      border-radius: 36px;
+      display: inline-block;
+      padding: 0;
+      margin-left: 20px;
+    }
+    .patch-intro-image-inner {
+      border: 8px solid #b39ddb; /* Purple */
+      border-radius: 28px;
+      padding: 0;
+    }
+    .patch-intro-image {
+      width: 520px;
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 20px;
+      display: block;
+      margin: 0;
+    }
+    @media (max-width: 900px) {
+      .patch-intro-section {
+        flex-direction: column;
+        padding: 40px 24px;
+        gap: 32px;
+      }
+      .patch-intro-left {
+        max-width: 100%;
+        margin-left: 0;
+        margin-bottom: 40px;
+      }
+      .patch-intro-image-bg {
+        padding: 12px;
+        border-radius: 20px;
+      }
+      .patch-intro-image-outer {
+        border-radius: 12px;
+      }
+      .patch-intro-image-inner {
+        border-radius: 6px;
+      }
+      .patch-intro-image {
+        width: 100%;
+        height: auto;
+        border-radius: 4px;
+      }
+    }
+    .bestseller-tag {
+      display: inline-block;
+      background: #8B0000;
+      color: #fff;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      animation: float 3s ease-in-out infinite;
+    }
+    .coming-soon-tag {
+      display: inline-block;
+      background: #111;
+      color: #fff;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-top: 24px;
+    }
+    .contact-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 40px 80px;
+      background: #111;
+    }
+    .contact-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+    .contact-email {
+      font-size: 1.1rem;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .contact-email:hover {
+      opacity: 0.8;
+    }
+    .contact-section-new {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 80px;
+      background: transparent;
+      text-align: center;
+    }
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: #111;
+      margin: 0;
+    }
+    .contact-title-new {
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: #111;
+    }
+    .contact-text-new {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #444;
+      max-width: 600px;
+    }
+    .contact-email-new {
+      color: #111;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .contact-email-new:hover {
+      opacity: 0.8;
+    }
+    .patches-intro {
+      width: 100%;
+      text-align: center;
+      padding: 32px 0 40px;
+    }
+    .patches-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 24px;
+      line-height: 1.2;
+    }
+    .patches-desc {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #444;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    @media (max-width: 900px) {
+      .patches-title {
+        font-size: 2.5rem;
+      }
+      .patches-desc {
+        font-size: 1.2rem;
+        padding: 0 24px;
+      }
+    }
+    .product-card-section {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      background: transparent;
+      padding: 40px 0 80px 0;
+    }
+    .product-card-grid {
+      display: flex;
+      gap: 40px;
+      width: 100%;
+      max-width: 1800px;
+      justify-content: center;
+    }
+    .product-card {
+      background: #fff;
+      border-radius: 28px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      width: 300px;
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      padding: 0 0 32px 0;
+      transition: box-shadow 0.2s, transform 0.2s;
+      overflow: hidden;
+    }
+    .product-card:hover {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+      transform: translateY(-8px) scale(1.02);
+    }
+    .card-red { background: #E74C3C; }
+    .card-red .product-card-badge.badge-new {
+      background: #fff;
+      color: #E74C3C;
+      border: none;
+    }
+    .card-purple { background: #b39ddb; }
+    .card-purple .product-card-badge.badge-new {
+      background: #fff;
+      color: #b39ddb;
+      border: none;
+    }
+    .card-green { background: #4dd0b0; }
+    .card-green .product-card-badge.badge-new {
+      background: #fff;
+      color: #4dd0b0;
+      border: none;
+    }
+    .product-card-badge {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      background: #111;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 8px 20px;
+      border-radius: 20px;
+      z-index: 2;
+    }
+    .badge-new {
+      background: #fff;
+      color: #FDD017;
+      border: none;
+    }
+    .product-card-img {
+      width: 180px;
+      height: 180px;
+      object-fit: contain;
+      border-radius: 18px;
+      margin: 48px 0 24px 0;
+      background: #fff;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .product-card-icon {
+      font-size: 5rem;
+      margin: 64px 0 24px 0;
+      color: #fff;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .product-card-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 8px;
+      letter-spacing: 0.01em;
+      text-align: center;
+      margin-top: auto;
+    }
+    .product-card-subtitle {
+      font-size: 0.95rem;
+      color: #222;
+      margin-bottom: 24px;
+      text-align: center;
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+    .product-card-info {
+      background: #fff;
+      border-radius: 0 0 24px 24px;
+      width: 100%;
+      padding: 20px 20px 0 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-height: 140px;
+      box-sizing: border-box;
+      margin-top: auto;
+    }
+    .product-card-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 8px;
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+    .product-card-desc {
+      font-size: 0.95rem;
+      color: #444;
+      margin-bottom: 24px;
+    }
+    .product-card-price {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 20px;
+    }
+    .product-card-btn {
+      background: #111;
+      color: #fff;
+      border: none;
+      border-radius: 24px;
+      padding: 12px 32px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      margin-top: 10px;
+    }
+    .product-card-btn.btn-yellow {
+      background: #FDD017;
+      color: #111;
+    }
+    .product-card-btn.btn-red {
+      background: #E74C3C;
+      color: #fff;
+    }
+    .product-card-btn.btn-purple {
+      background: #b39ddb;
+      color: #fff;
+    }
+    .product-card-btn.btn-green {
+      background: #4dd0b0;
+      color: #fff;
+    }
+    .product-card-btn:hover {
+      opacity: 0.9;
+    }
+    @media (max-width: 1200px) {
+      .product-card-grid {
+        flex-direction: column;
+        gap: 32px;
+        align-items: center;
+      }
+      .product-card {
+        width: 90vw;
+        min-width: 0;
+        max-width: 320px;
+      }
+    }
+    .highlight-yellow {
+      color: #FDD017;
+    }
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: #111;
+      margin: 0;
+      border: none;
+    }
+    .product-card.card-yellow { background: #FDD017; }
+    .product-card-btn,
+    .product-card-btn.btn-yellow,
+    .product-card-btn.btn-red,
+    .product-card-btn.btn-purple,
+    .product-card-btn.btn-green {
+      color: #fff !important;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <img src="https://raw.githubusercontent.com/kal-ops/Nova/8a4fecb197a054e979bd47b20c4d69f4a9f7b336/Nova%20Logo.png" alt="Nova Logo">
+      NOVASKIN
+    </div>
+    <nav class="nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="supernova.html" class="nav-link">Supernova</a>
+    </nav>
+  </header>
+  <div class="section-divider"></div>
+  <main class="main">
+    <section class="main-left">
+      <div class="main-logo">
+        <img src="https://raw.githubusercontent.com/kal-ops/Nova/8a4fecb197a054e979bd47b20c4d69f4a9f7b336/Nova%20Logo.png" alt="Nova Logo">
+        <span class="main-logo-text">NOVASKIN</span>
+      </div>
+      <h1 class="main-title">Your Daily <span class="highlight">Wellness</span><br>Companion</h1>
+      <p class="main-desc">Experience the future of wellness with our innovative patches. From energy boosts to peaceful sleep, we've got you covered.</p>
+      <div class="main-buttons">
+        <button class="btn btn-primary">Explore Patches</button>
+        <button class="btn btn-secondary">Learn More</button>
+      </div>
+    </section>
+    <section class="main-right">
+      <div class="hollow-star">★</div>
+    </section>
+  </main>
+  <div class="section-divider"></div>
+  <section class="patches-intro">
+    <h2 class="patches-title">FEEL-GOOD PATCHES THAT <span class="highlight-yellow">ACTUALLY</span> WORK</h2>
+    <p class="patches-desc">Our wellness patches are designed to give you the energy, focus, and rest you need - all in a super cute pocket-sized box</p>
+  </section>
+  <section class="three-box-section">
+    <div class="three-box-container">
+      <div class="color-box box-green">
+        <div class="box-content">
+          <div class="box-emoji">⚡</div>
+          <div class="box-title">Focus & Energy</div>
+          <div class="box-subtext">Stay sharp. Go further.</div>
+        </div>
+      </div>
+      <div class="color-box box-red">
+        <div class="box-content">
+          <div class="box-emoji">🩸</div>
+          <div class="box-title">Vitamin B12 & Iron</div>
+          <div class="box-subtext">Fuel your body. Power your mind.</div>
+        </div>
+      </div>
+      <div class="color-box box-yellow">
+        <div class="box-content">
+          <div class="box-emoji">🌞</div>
+          <div class="box-title">Vitamin D3</div>
+          <div class="box-subtext">Strong bones. Bright moods.</div>
+        </div>
+      </div>
+      <div class="color-box box-purple">
+        <div class="box-content">
+          <div class="box-emoji">😴</div>
+          <div class="box-title">Sleep</div>
+          <div class="box-subtext">Rest deeper. Wake brighter.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="section-divider"></div>
+  <section class="patch-intro-section">
+    <div class="patch-intro-left">
+      <div class="patch-intro-title">About NovaSkin</div>
+      <div class="patch-intro-desc">
+        NovaSkin was born from a simple idea: wellness should be accessible, effective, and fit seamlessly into your daily routine.<br><br>
+        Our team of patch enthusiasts (yes that's a thing) have developed innovative wellness patches that deliver nutrients, supplements, and beneficial compounds through your skin - bypassing your digestive system for better absorption and more consistent results.<br><br>
+        The Supernova, our signature storage box, helps you keep your wellness journey organized and stylish, wherever you go.
+      </div>
+      <button class="learn-more-btn"><span class="star">★</span> Learn more about us</button>
+    </div>
+    <div class="patch-intro-image-outer">
+      <div class="patch-intro-image-inner">
+        <img src="https://raw.githubusercontent.com/kal-ops/Nova/7a179d0e78f3804bd1bd93c3f9e17ae6428016ef/ChatGPT%20Image%20Apr%207%2C%202025%20at%2006_04_40%20PM.png" alt="Supernova Patch Carrier" class="patch-intro-image">
+      </div>
+    </div>
+  </section>
+  <div class="section-divider"></div>
+  <section class="product-card-section">
+    <div class="product-card-grid">
+      <!-- Card 1: PowerCore (Red) -->
+      <div class="product-card card-red">
+        <div class="product-card-badge badge-new">New</div>
+        <div class="product-card-title">PowerCore</div>
+        <div class="product-card-subtitle">B12 + Iron-infused patch to charge your body and sharpen your mind.</div>
+        <div class="product-card-info">
+          <div class="product-card-name">B12 + Iron Patch</div>
+          <div class="product-card-desc">Daily vitality, inside and out.</div>
+          <button class="product-card-btn btn-red">Coming soon!</button>
+        </div>
+      </div>
+      <!-- Card 2: Dream Catcher (Purple) -->
+      <div class="product-card card-purple">
+        <div class="product-card-badge badge-new">New</div>
+        <div class="product-card-title">Dream Catcher</div>
+        <div class="product-card-subtitle">Fall asleep faster and sleep deeper with our melatonin-infused refill patch.</div>
+        <div class="product-card-info">
+          <div class="product-card-name">Sleep Patch</div>
+          <div class="product-card-desc">Drift into deep, uninterrupted rest.</div>
+          <button class="product-card-btn btn-purple">Coming soon!</button>
+        </div>
+      </div>
+      <!-- Card 3: SunDrop (Yellow) -->
+      <div class="product-card card-yellow">
+        <div class="product-card-badge badge-new">New</div>
+        <div class="product-card-title">SunDrop</div>
+        <div class="product-card-subtitle">A vitamin D3-infused patch that strengthens bones and uplifts your mood.</div>
+        <div class="product-card-info">
+          <div class="product-card-name">D3 Patch</div>
+          <div class="product-card-desc">Sunshine support, even on cloudy days.</div>
+          <button class="product-card-btn btn-yellow">Coming soon!</button>
+        </div>
+      </div>
+      <!-- Card 4: NeuroFuel (Green) -->
+      <div class="product-card card-green">
+        <div class="product-card-badge badge-new">New</div>
+        <div class="product-card-title">NeuroFuel</div>
+        <div class="product-card-subtitle">Enhance focus, fight fatigue, and power through your day with natural clarity.</div>
+        <div class="product-card-info">
+          <div class="product-card-name">Focus & Energy Patch</div>
+          <div class="product-card-desc">Mental sharpness meets lasting energy.</div>
+          <button class="product-card-btn btn-green">Coming soon!</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="section-divider"></div>
+  <section class="contact-section-new">
+    <h2 class="contact-title-new">Contact us</h2>
+    <p class="contact-text-new">Interested in our product? We would love to hear from you! Reach out to us at <a href="mailto:info@novaskin.co.in" class="contact-email-new">info@novaskin.co.in</a></p>
+  </section>
+  <script>
+    window.addEventListener('scroll', function() {
+      const scrollPosition = window.scrollY;
+      const star = document.querySelector('.hollow-star');
+      star.style.transform = `translateY(-50%) rotate(${scrollPosition * 0.3}deg)`;
+    });
+  </script>
+</body>
+</html>
