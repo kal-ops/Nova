@@ -586,6 +586,34 @@
     .product-card-btn.btn-green {
       color: #fff !important;
     }
+    @media (max-width: 600px) {
+      .main {
+        flex-direction: column;
+        padding: 20px;
+      }
+      .main-right {
+        width: 100%;
+        height: 300px;
+      }
+      .hollow-star {
+        font-size: 15rem;
+      }
+      .product-card-grid {
+        flex-direction: column;
+        align-items: center;
+      }
+      .product-card {
+        width: 90%;
+        max-width: 300px;
+      }
+      .product-card-title, .product-card-subtitle, .product-card-name, .product-card-desc {
+        font-size: 0.9rem;
+      }
+      .product-card-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+      }
+    }
   </style>
 </head>
 <body>
